@@ -4,24 +4,70 @@ Login
 {%endblock%}
 {% block content %}
 
+<div class='join-forms'>
+    <div class='login-form'>
+        <h1>Login</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label>Email: </label>
+            <br>
+            <input type="text" name="email" placeholder="Input your email address"/>
+            <br>
+            <label>Password: </label>
+            <br>
+            <input type="password" name="password" placeholder="Input your password"/>
+            <br>
+            <input type="hidden" name="join_type" value="login"/>
 
-<h1>Login</h1>
+            <input type="submit" name='form_type' value="Login">
+        </form>
+        
+    </div>
+    
+    <div class='register-form'>
+        <h1>Register</h1>
 
-<form action="" method="POST">
-    {% csrf_token %}
-    <label>Email: </label>
-    <br>
-    <input type="text" name="email" placeholder="Input your email address"/>
-    <br>
-    <label>Password: </label>
-    <br>
-    <input type="password" name="password" placeholder="Input your password"/>
-    <br>
-    <input type="submit" value="Login">
-</form>
-{% for message in messages %}
-    <p>{{message}}</p>
-{% endfor %}
-<p>Dont have an account? <a href="{% url 'register' %}">Register here.</a></p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div>
+                {{form.email.label}}
+                {{form.email}}
+            </div>
+            
+            <div>
+                {{form.name.label}}
+                {{form.name}}
+                
+            </div>
+            <div>
+                {{form.job_title.label}}
+                {{form.job_title}}
+            </div>
+            <div>
+                {{form.password1.label}}
+                {{form.password1}}
+                
+            </div>
+            <div>
+                {{form.password2.label}}
+                {{form.password2}}
+                
+            </div>
+
+            <input type="submit" name='form_type' value="Register">
+
+        </form>
+        
+    </div>
+    
+</div>
+<div class='error-message'>
+    {{form.errors}}
+    {% for message in messages %}
+        <p class='error-message'>{{message}}</p>
+    {% endfor %}
+</div>
+
+{% comment %} <p>Dont have an account? <a href="{% url 'register' %}">Register here.</a></p> {% endcomment %}
 
 {%endblock content%}

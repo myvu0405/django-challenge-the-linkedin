@@ -8,8 +8,69 @@ from django.contrib.auth import authenticate,login,logout
 
 from django.contrib.auth.decorators import login_required
 
+def joinPage(request):
+    if request.user.is_authenticated:
+        return redirect('members')
 
-# Create your views here.
+    form = UserRegisterForm()
+
+    context ={'form':form}
+
+    if request.method=='POST' and request.POST["form_type"]=='Login':
+        email=request.POST['email']
+        password=request.POST['password']
+
+        user = authenticate(request,email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            try: 
+                next_url = request.GET['next']
+                next_url=next_url.replace('/','')
+                if next_url!= '':
+                    return redirect(next_url)
+                else:
+                    return redirect('members')
+                
+            except:
+                return redirect('members')
+
+        else:
+            messages.error(request,'Email or Password is incorrect!')
+
+    elif request.method=='POST' and request.POST["form_type"]=='Register':
+
+        form = UserRegisterForm(request.POST)
+
+        if form.is_valid():
+            if any(char.isdigit() for char in request.POST['name']):
+                messages.error(request, "Member's name should only contain letters.")
+                return render(request, 'accounts/login.html',{'form':form})
+            elif len(request.POST['name']) <4:
+                messages.error(request, "Member's name should contain at least 4 letters.")
+                return render(request, 'accounts/login.html',{'form':form})
+
+            elif any(char.isdigit() for char in request.POST['job_title']):
+                messages.error(request, "Member's job title should only contain letters.")
+                return render(request, 'accounts/login.html',{'form':form})
+
+            elif len(request.POST['job_title']) <14:
+                messages.error(request, "Member's job title should contain at least 14 letters.")
+                return render(request, 'accounts/login.html',{'form':form})
+
+            else:
+                form.save()
+                user = form.cleaned_data.get('name')
+                messages.success(request, 'Member was registered and saved to database for '+user)
+                return redirect('login')
+
+        context = {'form':form}
+
+
+    return render(request,'accounts/login.html',context)
+    
+
+
 def registerPage(request):
     form = UserRegisterForm()
 
