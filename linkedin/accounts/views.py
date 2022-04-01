@@ -76,7 +76,7 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
-@login_required(login_url='/login')
+@login_required(login_url='login')
 def membersPage(request):
     # if not request.user.is_authenticated:
     #     return redirect('login')
@@ -86,7 +86,7 @@ def membersPage(request):
 
     return render(request,'accounts/members.html', {'members':members,'count':count})
 
-@login_required(login_url='/login')
+@login_required(login_url='login')
 def profilePage(request,pk):
     member = LinkedinUser.objects.get(id=pk)
 
