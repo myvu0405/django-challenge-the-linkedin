@@ -1,0 +1,46 @@
+{% extends 'accounts/main.html' %}
+{% block title %}
+Register new member
+{%endblock%}
+{% block content %}
+
+<h1>Register</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div>
+        {{form.email.label}}
+        {{form.email}}
+    </div>
+    
+    <div>
+        {{form.name.label}}
+        {{form.name}}
+        
+    </div>
+    <div>
+        {{form.job_title.label}}
+        {{form.job_title}}
+    </div>
+    <div>
+        {{form.password1.label}}
+        {{form.password1}}
+        
+    </div>
+    <div>
+        {{form.password2.label}}
+        {{form.password2}}
+        
+    </div>
+
+    <input type="submit" value="Register">
+
+</form>
+<div class='error-message'>
+    {{form.errors}}
+    {% for message in messages %}
+        <p class='error-message'>{{message}}</p>
+    {% endfor %}
+</div>
+<p>Already have an account? <a href="{% url 'login' %}">Login here.</a></p>
+{%endblock content%}

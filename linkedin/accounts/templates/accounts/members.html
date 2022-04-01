@@ -1,0 +1,22 @@
+{% extends 'accounts/main.html' %}
+{% block title %}
+Members
+{%endblock%}
+{% block content %}
+
+
+<h1>All Members</h1>
+<h3 style="margin: 0;">There is/are <i>{{count}}</i> member{{count|pluralize:"s"}}.</h3>
+<div class='members'>
+{% for member in members %}
+    <div class="member">
+        <p>Member: <strong>{{member.name}}</strong></p>
+        <a href="{% url 'profile' member.id %}">View Profile</a>
+        
+    </div>
+    {% empty %}
+        <h3>No members to show.</h3>
+{% endfor %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dosis:wght@200&family=Kanit:wght@500&family=Nunito:wght@200&family=Roboto:wght@500&display=swap" rel="stylesheet">
+
+    <title>LinkedIn | {% block title %} {%endblock%}</title>
+
+    <style>
+        body{
+            background-color: #fafafa;
+            font-family: 'Nunito', sans-serif;
+            padding-top: 50px;
+        }
+
+        h1,h2,h3,h4,h5 {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        a,p {
+            color: #4b5156;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            color: rgb(117, 22, 22);
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .header-bar a{
+            text-decoration: none;
+            color: blue;
+        }
+        .member {
+            width: 95%;
+            margin: auto;
+            text-align: center;
+            background:lightgrey;
+            border-radius:5px;
+            color: white;
+        }
+
+      .profile-detail {
+          font-size:16pt;
+          font-weight:bold;
+      }
+        
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        
+        {% if request.user.is_authenticated %}
+            <div>
+                <h1>
+                    Hello, {{request.user.name|title}}
+                </h1>
+            </div>
+            <a href="{% url 'logout' %}">Logout</a>
+    
+        {% else %}
+            <div>
+                <h1>
+                    Hello, {{request.user|title}}
+                </h1>
+            </div>
+            <a href="{% url 'login' %}">Login</a>
+    
+        {% endif %}
+    </div>
+    
+    <hr>
+    <div class="container">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+</body>
+</html>
