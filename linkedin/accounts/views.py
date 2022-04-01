@@ -83,7 +83,6 @@ def membersPage(request):
 
     members = LinkedinUser.objects.all().order_by('name')
     count=members.count()
-    # form = MemberForm()
 
     return render(request,'accounts/members.html', {'members':members,'count':count})
 
